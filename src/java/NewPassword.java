@@ -27,10 +27,10 @@ public class NewPassword extends HttpServlet {
 
                 if (updated) {
                     request.setAttribute("status", "resetSuccess");
-                    response.sendRedirect("/GlowyDays/JSP/Login.jsp");
+                    response.sendRedirect("/JSP/Login.jsp");
                 } else {
                     session.setAttribute("message", "<span style='color:red;'>Reset Password Failed. Please try again</span>");
-                    response.sendRedirect("/GlowyDays/JSP/ForgotPassword.jsp");
+                    response.sendRedirect("/JSP/ForgotPassword.jsp");
                 }
 		}
 }

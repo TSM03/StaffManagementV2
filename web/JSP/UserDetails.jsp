@@ -41,7 +41,7 @@
             <h1>User Details</h1>
                 <hr>
                 
-                <form id="userForm" action="/GlowyDays/UpdateUserDetails" method="post" onsubmit="prepareForm()">
+                <form id="userForm" action="/UpdateUserDetails" method="post" onsubmit="prepareForm()">
                     <fieldset>
                         
                         <!-- Name Field -->
@@ -175,7 +175,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -209,7 +209,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -280,7 +280,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -325,7 +325,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {

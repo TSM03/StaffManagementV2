@@ -32,7 +32,7 @@ public class ValidateOtp extends HttpServlet {
         } else {
             // 如果 OTP 不匹配，返回 EnterOTP.jsp 并显示错误消息
             mySession.setAttribute("message", "<span style='color:red;'>OTP Wrong. Please try again</span>");
-            response.sendRedirect("/GlowyDays/JSP/EnterOTP.jsp");
+            response.sendRedirect("/JSP/EnterOTP.jsp");
         }
     }
 }

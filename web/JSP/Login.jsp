@@ -15,28 +15,47 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Login</title>
-    <link href="../CSS/register.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <link href="../CSS/home.css?v=2" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <section id="header">
-        <div class="header-left">
-            <a href="../JSP/GuestHome.jsp"><img src="../IMG/logo.jpg" alt="Index" width="180" height="70"></a>
-        </div>
-        <div class="header-right">
-            <input type="text" placeholder="Search.."><img src="../ICON/search.svg" width="30" height="30">
-            <a href="../JSP/cart.jsp"><img src="../ICON/cart.svg" alt="Cart" width="45" height="45"></a>
-            <a href="../JSP/Register.jsp"><img src="../ICON/avatar.svg" alt="Login" width="40" height="40"></a>
-        </div>
-    </section>
-    
-    <div id="signup">
+    <section id="header" class="header">   
+             <a href="GuestHome.jsp"><h2 style="font-weight: bolder; font-size: 3rem; color: black;">GLOWY DAYS</h2></a>
+               <div class="navbar">
+                    <a href="">Home</a>
+                    <div class="dropdown">
+                        <a href="#">Product</a>
+                        <div class="dropdown-content">
+                            <a href="#">Skincare</a>
+                            <a href="#">Makeup</a>
+                            <a href="#">Hair Care</a>
+                            <a href="#">Body Care</a>
+                            <a href="#">Fragrance</a>
+                            <a href="#">Tools</a>
+                            <a href="#">Men's Care</a>
+                            <a href="#">Sets & Gifts</a>
+                        </div>
+                    </div>
+                    <a href="">About Us</a>               
+                    <a href="">Contact Us</a>                             
+               </div>
+               <div class="icons">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+                        <input type="text" id="search-box" placeholder="Search..." />
+                    </div>
+                    <a href="" class="fa-solid fa-cart-shopping"></a>    
+                    <a href="UserRegister.jsp" class="fa-regular fa-user"></a>
+               </div>
+        </section>
         <br />
         <h1>Log in</h1>
         <p style="font-size:20px; text-align: center; margin-top: 5px; margin-bottom:5px;">Please fill in the fields below</p>
         <hr>
         
-        <form action="/GlowyDays/UserLogin" method="post">
+        <form id="loginForm" method="post">
             <fieldset>  
                 <div class="label">
                     <label for="emailInput">Email:</label>
@@ -73,7 +92,52 @@
         </form>
     </div>
 
-    <!-- Email validation (Check the email address has been registered or not)-->
+<section class="footer">
+        <div class="box-container">
+
+          <div class="box">
+            <h3>Quick Links</h3>
+            <a href="#"><i class="fas fa-angle-right"></i> Home</a>
+            <a href="#"><i class="fas fa-angle-right"></i> Product</a>
+            <a href="#"><i class="fas fa-angle-right"></i> About Us</a>
+            <a href="#"><i class="fas fa-angle-right"></i> Contact Us</a>
+          </div>
+
+          <div class="box">
+            <h3>Extra Links</h3>
+            <a href="#"><i class="fas fa-angle-right"></i> My Favorite</a>
+            <a href="#"><i class="fas fa-angle-right"></i> My Orders</a>
+            <a href="#"><i class="fas fa-angle-right"></i> Wishlist</a>
+            <a href="#"><i class="fas fa-angle-right"></i> Terms of Use</a>
+          </div>
+
+          <div class="box">
+            <h3>Contact Info</h3>
+            <a href="#"><i class="fas fa-phone"></i> +6018-9064828</a>
+            <a href="#"><i class="fas fa-phone"></i> +6012-3456789</a>
+            <a href="#"><i class="fas fa-envelope"></i> tansm-wm23@student.tarc.edu.my</a>
+            <a href="#"><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</a>
+
+            <div class="share">
+              <a href="#" class="fab fa-facebook-f"></a>
+              <a href="#" class="fab fa-instagram"></a>
+              <a href="#" class="fab fa-twitter"></a>
+            </div>
+          </div>
+
+          <div class="box">
+            <h3>Newsletter</h3>
+            <p>Subscribe for Latest Updates</p>
+            <form action="">
+              <input type="email" placeholder="Enter your email" class="email">
+              <input type="submit" value="Subscribe" class="btn">
+            </form>
+          </div>
+
+        </div>
+     </section>
+
+     <!-- Email validation (Check the email address has been registered or not)-->
     <script>
         $(document).ready(function(){
             $('#email').on('keyup', function(){
@@ -87,7 +151,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/LoginEmail',
+                            url: '/LoginEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Not registered") {
@@ -138,14 +202,14 @@
                 // AJAX 调用后台 LoginPassword servlet 进行验证
                 $.ajax({
                     type: 'POST',
-                    url: '/GlowyDays/LoginPassword',
+                    url: '/LoginPassword',
                     data: { email: email, password: password },
                     success: function (response) {
                         if (response.trim() === "Not login") {
                             $('#passwordValidation').html('<span style="color:red; font-size:13px;">Invalid password! Please try again!</span>');
                             $('#password').val('');
                         } else {
-                            break;
+                            window.location.href = '/JSP/UserHome.jsp'; // 可替换为你的首页
                         }
                     },
                     error: function () {
@@ -156,6 +220,6 @@
         });
     </script>
     <!-- End of password validation (Check the email address and password)-->
-      
-</body>
+    <script src="../JavaScript/main.js"></script>
+     </body>
 </html>

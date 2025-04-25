@@ -37,7 +37,7 @@ public class UpdateStaffServlet extends HttpServlet {
             int rowsUpdated = ps.executeUpdate();
 
             if (rowsUpdated > 0) {
-                response.sendRedirect("/GlowyDays/JSP/AdminPanel.jsp"); // or redirect back to staff list
+                response.sendRedirect("/JSP/AdminPanel.jsp"); // or redirect back to staff list
             } else {
                 response.getWriter().println("No record updated.");
             }

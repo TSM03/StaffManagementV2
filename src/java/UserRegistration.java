@@ -37,7 +37,7 @@ public class UserRegistration extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("userID", user.getId());           // Store user ID
                     session.setAttribute("username", user.getUsername());   // Store username
-                    response.sendRedirect("/GlowyDays/JSP/UserHome.jsp");
+                    response.sendRedirect("/JSP/UserHome.jsp");
                 } else {
                     out.println("Registration Failed!");
                 }

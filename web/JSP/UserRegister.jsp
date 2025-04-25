@@ -34,7 +34,7 @@
         <p style="font-size:20px; text-align: center; margin-top: 5px; margin-bottom:5px;">Please fill in the fields below</p>
         <hr>
         
-        <form action="/GlowyDays/UserRegistration" method="post">
+        <form action="/UserRegistration" method="post">
             <fieldset>
                 <div class="label">
                     <label for="name">Full Name:</label>
@@ -173,7 +173,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -207,7 +207,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -278,7 +278,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -323,7 +323,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {
@@ -376,7 +376,7 @@
                 if (hasLowerCase && hasUpperCase && hasNumber && hasMinLength) {
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckPassword',
+                        url: '/CheckPassword',
                         data: { password: password },
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages

@@ -50,12 +50,24 @@ ResultSet resultSet = null;
                 <span>Dashboard</span>
                 </div>
             </div>
-            <div class="menu-item">
+            <div class="menu-item customer-toggle">
                 <div class="menu-left">
-                <i class="fa-regular fa-user"></i>
-                <span>Customer Management</span>
+                    <i class="fa-regular fa-user"></i>
+                    <span>Customer Management</span>              
+                </div>             
+                <i class="fas fa-chevron-right menu-arrow"></i>
+            </div>
+
+            <!-- Dropdown Submenu for Customer -->
+            <div class="submenu" style="display: none;">
+                <div class="submenu-item">
+                    <a href="AddNewUser.jsp">Create Customer</a>
+                </div>
+                <div class="submenu-item">
+                    <a href="#" onclick="loadCustomerList()">Customer Listing</a>
                 </div>
             </div>
+            
             <!-- Staff Management Section -->
             <div class="menu-item staff-toggle">
                 <div class="menu-left">
@@ -208,18 +220,27 @@ ResultSet resultSet = null;
     </div>
 </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         const staffToggle = document.querySelector(".staff-toggle");
-        const submenu = document.querySelector(".staff-submenu");
-        const arrow = staffToggle.querySelector(".menu-arrow");
+        const staffSubmenu = staffToggle.nextElementSibling; // the next .submenu after staff-toggle
+        const staffArrow = staffToggle.querySelector(".menu-arrow");
 
         staffToggle.addEventListener("click", function () {
-            submenu.style.display = submenu.style.display === "none" ? "block" : "none";
-            arrow.classList.toggle("rotate");
-        });
+            staffSubmenu.style.display = staffSubmenu.style.display === "none" ? "block" : "none";
+            staffArrow.classList.toggle("rotate");
         });
 
-        function loadStaffList() {
+        const customerToggle = document.querySelector(".customer-toggle");
+        const customerSubmenu = customerToggle.nextElementSibling; // the next .submenu after customer-toggle
+        const customerArrow = customerToggle.querySelector(".menu-arrow");
+
+        customerToggle.addEventListener("click", function () {
+            customerSubmenu.style.display = customerSubmenu.style.display === "none" ? "block" : "none";
+            customerArrow.classList.toggle("rotate");
+        });
+    });
+
+    function loadStaffList() {
         fetch('StaffList.jsp')
             .then(response => response.text())
             .then(data => {
@@ -230,7 +251,17 @@ ResultSet resultSet = null;
             });
     }
 
-    </script>
+    function loadCustomerList() {
+        fetch('CustomerManagement.jsp')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.dashboard-content').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading customer list:', error);
+            });
+    }
+</script>
 </body>
 </html>
 

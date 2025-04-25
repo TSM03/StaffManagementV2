@@ -13,7 +13,7 @@
         <p style="font-size:20px; text-align: center; margin-top: 5px; margin-bottom:5px;">Please fill in the fields below</p>
         <hr>
         
-        <form action="/GlowyDays/NewPassword" method="post">
+        <form action="/NewPassword" method="post">
             <fieldset>
                 <div class="label">
                     <label for="passwordInput">Password:</label>
@@ -84,7 +84,7 @@
                 if (hasLowerCase && hasUpperCase && hasNumber && hasMinLength) {
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckPassword',
+                        url: '/CheckPassword',
                         data: { password: password },
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages

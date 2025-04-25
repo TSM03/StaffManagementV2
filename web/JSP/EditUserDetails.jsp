@@ -10,10 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit User</title>
-        <link href="../CSS/style.css" rel="stylesheet" type="text/css">
-        <link href="../CSS/updateUser.css" rel="stylesheet" type="text/css">
-        <link href="../CSS/edit.css" rel="stylesheet" type="text/css">
-         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link href="../CSS/Edit.css" rel="stylesheet" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 <body>
 
@@ -106,16 +105,22 @@
                     
         <div id="details">
             <br />
+            <div class="wrap">
+            
+                <a href="AdminPanel.jsp" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+                
             <h1>Edit User</h1>
-                <hr>
                 
                 <% if (!message.isEmpty()) { %>
                     <p style="color: green;"><%= message %></p>
                 <% } %>
 
                 <% if (user != null) { %>
-                
-                <form action="/GlowyDays/UpdateUserDetailsAdmin" method="post">
+                <div>
+                    
+                <form action="/UpdateUserDetailsAdmin" method="post">
                     <input type="hidden" name="id" value="<%= user.getId() %>" />
 
                     <div class="form-row">
@@ -173,8 +178,10 @@
                         </div>
                     </div>               
 
-                    <button type="submit" style="border-radius:10px;">Update User</button>
+                    <button type="submit" class="register-btn" style="border-radius:10px;">Update User</button>
                 </form>
+        </div>
+                </div>
         </div>
     <% } else { %>
         <p style="color: red;">⚠️ Customer not found.</p>
@@ -194,7 +201,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -228,7 +235,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -299,7 +306,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -344,7 +351,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {
@@ -397,7 +404,7 @@
                 if (hasLowerCase && hasUpperCase && hasNumber && hasMinLength) {
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckPassword',
+                        url: '/CheckPassword',
                         data: { password: password },
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages

@@ -12,7 +12,7 @@
         <title>Edit User</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="../CSS/Edit.css?v=2" rel="stylesheet" type="text/css">
-         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 <body>
 <%
@@ -117,7 +117,8 @@
 
                 <% if (user != null) { %>   
                 <div>
-                <form action="/GlowyDays/UpdateStaffServlet" method="post">
+                    
+                <form action="/UpdateStaffServlet" method="post">
                     <input type="hidden" name="id" value="<%= user.getId() %>" />
 
                     <div class="form-row">
@@ -198,7 +199,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -232,7 +233,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -303,7 +304,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -348,7 +349,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {
@@ -401,7 +402,7 @@
                 if (hasLowerCase && hasUpperCase && hasNumber && hasMinLength) {
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckPassword',
+                        url: '/CheckPassword',
                         data: { password: password },
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages

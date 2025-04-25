@@ -8,30 +8,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>User Home</title>
-    <link href="../CSS/style.css" rel="stylesheet" type="text/css">
+    <link href="../CSS/List.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <section id="header">
-        <div class="header-left">
-            <a href="../JSP/UserHome.jsp"><img src="../IMG/logo.png" alt="Index" width="180" height="70"></a>
-        </div>
-        <div class="header-right">
-            <input type="text" placeholder="Search.."><img src="../ICON/search.svg" width="30" height="30">
-            <a href="../JSP/cart.jsp"><img src="../ICON/cart.svg" alt="Cart" width="45" height="45"></a>
-            <div class="avatar-container">
-                <img src="../ICON/avatar.svg" alt="Login" width="40" height="40">
-                <div class="dropdown-menu">
-                    <%
-                        Long userID = (Long) session.getAttribute("userID");
-                        String username = (String) session.getAttribute("username");
-                    %>
-                    <a style="pointer-events: none;">Username: <%= username %></a>
-                    <a href="../JSP/UserProfile.jsp">User Profile</a>
-                    <a href="<%= request.getContextPath() %>/LogoutServlet" >Log Out</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    
+        <%
+            Long userID = (Long) session.getAttribute("userID");
+            String username = (String) session.getAttribute("username");
+        %>               
         <%
             String driverName = "org.apache.derby.jdbc.ClientDriver";
             String connectionUrl = "jdbc:derby://localhost:1527/Client";
@@ -50,8 +35,10 @@
                 resultSet = statement.executeQuery(sql);
         %>
         <h2 align="center"><strong>Retrieve data from database in JSP</strong></h2>
-        <table align="center" cellpadding="5" cellspacing="5" border="1">
-            <tr bgcolor="#A52A2A">
+        <div class="table-container">
+        <table>
+            <thead>
+            <tr>
                 <td><b>ID</b></td>
                 <td><b>Name</b></td>
                 <td><b>Username</b></td>
@@ -61,10 +48,14 @@
                 <td><b>Role</b></td>
                 <td><b>Actions</b></td>
             </tr>
+        </thead>
+        
             <%
                 while (resultSet.next()) {
             %>
-            <tr bgcolor="#DEB887">
+            
+            <tbody>
+            <tr>
                 <td><%= resultSet.getString("user_id") %></td>
                 <td><%= resultSet.getString("name") %></td>
                 <td><%= resultSet.getString("username") %></td>
@@ -73,8 +64,12 @@
                 <td><%= resultSet.getString("mobileNo") %></td>
                 <td><%= resultSet.getString("role") %></td>
                 <td>
-                    <a href="EditUserDetails.jsp?id=<%= resultSet.getString("user_id") %>">Edit</a> |
-                    <a href="<%= request.getContextPath() %>/RemoveUserServlet?id=<%= resultSet.getString("user_id") %>" onclick="return confirm('Are you sure you want to delete this user?');">Remove</a>
+                    <a href="EditUserDetails.jsp?id=<%= resultSet.getString("user_id") %>" class="action-link edit"><i class="fas fa-pen"></i></a>
+                    <a href="<%= request.getContextPath() %>/RemoveUserServlet?id=<%= resultSet.getString("user_id") %>" 
+                    onclick="return confirm('Are you sure you want to delete this staff member?')" 
+                    class="action-link delete">
+                    <i class="fas fa-trash"></i>                
+                    </a>
                 </td>
             </tr>
             <%
@@ -92,8 +87,8 @@
                 }
             }
             %>
+        </tbody>
         </table>
-        
-        <p id="message" style="color: gray; font-size: 14px; text-align: center;">Add New User? <a href="/GlowyDays/JSP/AddNewUser.jsp">Click Here</a></p>
+        </div>
     </body>
 </html>

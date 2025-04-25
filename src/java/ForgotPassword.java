@@ -85,7 +85,7 @@ public class ForgotPassword extends HttpServlet {
             mySession.setAttribute("email", email);
 
             mySession.setAttribute("message", "OTP is sent to your email.");
-            response.sendRedirect("/GlowyDays/JSP/EnterOTP.jsp");
+            response.sendRedirect("/JSP/EnterOTP.jsp");
         }
     }
 }

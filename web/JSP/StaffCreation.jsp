@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <a href="../JSP/GuestHome.jsp" class="back-button">
+    <a href="AdminPanel.jsp" class="back-button">
         <i class="fas fa-arrow-left"></i> Back
     </a>
     
@@ -27,7 +27,7 @@
         <h1>Sign Up</h1>
         <p class="subtitle">Please fill in the fields below</p>
         
-        <form action="/GlowyDays/StaffRegistration" method="post">
+        <form action="/StaffRegistration" method="post">
             <div class="form-row">
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -95,7 +95,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -128,7 +128,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -197,7 +197,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -241,7 +241,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {

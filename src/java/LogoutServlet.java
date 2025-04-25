@@ -19,6 +19,6 @@ public class LogoutServlet extends HttpServlet {
         }
 
         // 跳转到 GuestHome.jsp
-        response.sendRedirect("/GlowyDays/JSP/GuestHome.jsp");
+        response.sendRedirect("/JSP/GuestHome.jsp");
     }
 }

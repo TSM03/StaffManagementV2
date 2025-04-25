@@ -37,7 +37,7 @@ public class UpdateUserDetailsAdmin extends HttpServlet {
             int rowsUpdated = ps.executeUpdate();
 
             if (rowsUpdated > 0) {
-                response.sendRedirect("/GlowyDays/JSP/CustomerManagement.jsp"); // or redirect back to staff list
+                response.sendRedirect("/JSP/CustomerManagement.jsp"); // or redirect back to staff list
             } else {
                 response.getWriter().println("No record updated.");
             }

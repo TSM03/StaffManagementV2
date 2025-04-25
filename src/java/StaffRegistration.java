@@ -39,7 +39,7 @@ public class StaffRegistration extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("userID", user.getId());
             session.setAttribute("username", user.getUsername());
-            response.sendRedirect("/GlowyDays/JSP/Login.jsp");
+            response.sendRedirect("/JSP/Login.jsp");
         } else {
             System.out.println("❌ Registration failed for: " + username);
             out.println("Staff registration failed!");

@@ -35,7 +35,7 @@ public class UpdateUserDetails extends HttpServlet {
 
             if (rows > 0) {
                 session.setAttribute(field, value);
-                response.sendRedirect("/GlowyDays/JSP/UserDetails.jsp");
+                response.sendRedirect("/JSP/UserDetails.jsp");
             } else {
                 response.getWriter().println("Failed to update.");
             }

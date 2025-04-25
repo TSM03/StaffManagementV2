@@ -190,7 +190,7 @@
             </div>
 
         </section>
-        
+    
     <section class="footer">
         <div class="box-container">
 
@@ -237,5 +237,5 @@
      </section>
   
     <script src="../JavaScript/main.js"></script>
-
+     </body>
 </html>

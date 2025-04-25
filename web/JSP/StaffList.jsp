@@ -34,7 +34,7 @@
                 String sql = "SELECT * FROM \"USER\" WHERE \"role\" = 'staff'";
                 resultSet = statement.executeQuery(sql);
         %>
-        <h2 align="center"><strong>Retrieve data from database in JSP</strong></h2>
+        <h2 align="center"><strong>STAFF</strong></h2>
          <div class="table-container">
             <table>
                 <thead>
@@ -68,8 +68,7 @@
                             onclick="return confirm('Are you sure you want to delete this staff member?')" 
                             class="action-link delete">
                             <i class="fas fa-trash"></i>
-</a>
-
+                            </a>
                         </td>
                     </tr>
             <%
@@ -89,5 +88,6 @@
             %>
             </tbody>
             </table>
+         </div>
     </body>
 </html>

@@ -41,7 +41,7 @@ public class UserRegistrationAdmin extends HttpServlet {
                     session.setAttribute("email", user.getEmail());           
                     session.setAttribute("mobileNo", user.getMobileNo());  
                     
-                    response.sendRedirect("/GlowyDays/JSP/CustomerManagement.jsp");
+                    response.sendRedirect("/JSP/CustomerManagement.jsp");
                 } else {
                     out.println("Registration Failed!");
                 }

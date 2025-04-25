@@ -23,7 +23,7 @@
                 <hr />
                 <hr />
             </div>
-            <form class="card mt-4" action="/GlowyDays/ForgotPassword" method="post">
+            <form class="card mt-4" action="/ForgotPassword" method="post">
                 <fieldset>
                     <div class="card-body">
                         <div class="label">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <button class="login" onclick="document.location='/GlowyDays/JSP/Login.jsp'">Back to Login</button>
+                    <button class="login" onclick="document.location='/JSP/Login.jsp'">Back to Login</button>
                     <button type="submit">Submit</button>
                 </fieldset>
             </form>
@@ -55,7 +55,7 @@
                         } else {
                             $.ajax({
                                 type: 'POST',
-                                url: '/GlowyDays/LoginEmail',
+                                url: '/LoginEmail',
                                 data: { email: email },
                                 success: function(response){
                                     if (response.trim() === "Not registered") {

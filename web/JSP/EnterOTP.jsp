@@ -26,7 +26,7 @@
                 %>
             </div>
             <div class="body">
-                <form action="/GlowyDays/ValidateOtp" autocomplete="off" method="post">
+                <form action="/ValidateOtp" autocomplete="off" method="post">
                     <div class="form-section">
                         <div class="input-group">
                             <img class="envelope" src="../ICON/envelope.svg">

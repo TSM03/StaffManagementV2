@@ -37,10 +37,10 @@ public class UserLogin extends HttpServlet {
                 switch (role) {
                     case "manager":
                     case "staff":
-                        response.sendRedirect("/GlowyDays/JSP/AdminPanel.jsp");
+                        response.sendRedirect("/JSP/AdminPanel.jsp");
                         break;
                     default:
-                        response.sendRedirect("/GlowyDays/JSP/UserHome.jsp");
+                        response.sendRedirect("/JSP/UserHome.jsp");
                         break;
                 }
             } else {

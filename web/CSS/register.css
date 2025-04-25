@@ -80,7 +80,6 @@ h1::after {
     margin-bottom: 30px;
 }
 
-/* Form layout */
 .form-row {
     display: flex;
     gap: 30px;
@@ -197,6 +196,7 @@ input[type="date"]:focus {
 .button-container {
     display: flex;
     gap: 15px;
+    margin-top: 20px;
 }
 
 /* Reset button */
@@ -234,3 +234,4 @@ input[type="date"]:focus {
 .register-btn:hover {
     opacity: 0.9;
 }
+

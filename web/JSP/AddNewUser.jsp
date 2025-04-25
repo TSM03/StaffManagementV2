@@ -12,117 +12,101 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="../CSS/register.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <section id="header">
-        <div class="header-left">
-            <a href="../JSP/GuestHome.jsp"><img src="../IMG/logo.jpg" alt="Index" width="180" height="70"></a>
-        </div>
-        <div class="header-right">
-            <input type="text" placeholder="Search.."><img src="../ICON/search.svg" width="30" height="30">
-            <a href="../JSP/cart.jsp"><img src="../ICON/cart.svg" alt="Cart" width="45" height="45"></a>
-            <a href="../JSP/Register.jsp"><img src="../ICON/avatar.svg" alt="Login" width="40" height="40"></a>
-        </div>
-    </section>
+    <!-- Back button added -->
+    <a href="AdminPanel.jsp" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
     
-    <div id="signup">
-        <br />
+    <div class="container">
         <h1>Sign Up</h1>
-        <p style="font-size:20px; text-align: center; margin-top: 5px; margin-bottom:5px;">Please fill in the fields below</p>
-        <hr>
+        <p class="subtitle">Please fill in the fields below</p>
         
-        <form action="/GlowyDays/UserRegistrationAdmin" method="post">
-            <fieldset>
-                <div class="label">
-                    <label for="name">Full Name:</label>
-                </div>
-                <div class="input">
-                    <input type="text" id="name" name="name" placeholder="Full Name" required>
-                    <div id="nameValidation"></div>
-                </div>
+        <form action="/UserRegistrationAdmin" method="post" class="registration-form">
+ 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Full Name" required>
+                        <div id="nameValidation" class="validation-message"></div>
+                    </div>
                 
-                <div class="label">
-                    <label for="username">Username:</label>
-                </div>
-                <div class="input">
-                    <input type="text" id="username" name="username" placeholder="Username" required><br/> 
-                    <span class="red-text accent-4" id="usernameValidation"></span>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                        <span class="red-text accent-4 validation-message" id="usernameValidation"></span>
+                    </div>
                 </div>
 
-                <div class="label">
-                    <label for="birthday">Birth date:</label>
-                </div>
-                <div class="input">
-                    <input type="date" id="birth" name="birth" required><br/>    
-                    <span id="birthValidation"></span>
-                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birth">Birth date:</label>
+                        <input type="date" id="birth" name="birth" class="custom-date" required>
+                        <span id="birthValidation" class="validation-message"></span>
+                    </div>
   
-                <div class="label">
-                    <label for="emailInput">Email:</label>
-                </div>
-                <div class="input">
-                    <input type="email" id="email" name="email" placeholder="Email" required><br/>   
-                    <div id="emailValidation"></div>
-                </div>
-                
-                <div class="label">
-                    <label for="phoneInput">Mobile Number:</label>
-                </div>
-                <div class="input">
-                    <input type="tel" id="mobileNo" name="mobileNo" pattern="01[0-9]-[0-9]{7,10}" placeholder="Mobile Number (01x-xxxxxxx)" required><br/>    
-                    <span class="red-text accent-4" id="phoneValidation"></span>
-                </div>
-                
-                <div class="label">
-                    <label for="passwordInput">Password:</label>
-                </div>
-                <div class="input">
-                    <input type="password" id="passwordInput" name="password" placeholder="Password" 
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br/>    
-                    <div id="passwordMessage" style="display: none;">
-                        <h3 style="font-size: 15px;">Password must contain the following:</h3>
-                        <p id="letter" class="invalid" style="font-size: 13px;">&#10006; A <b>lowercase</b> letter</p>
-                        <p id="capital" class="invalid" style="font-size: 13px;">&#10006; A <b>capital (uppercase)</b> letter</p>
-                        <p id="number" class="invalid" style="font-size: 13px;">&#10006; A <b>number</b></p>
-                        <p id="length" class="invalid" style="font-size: 13px;">&#10006; Minimum <b>8 characters</b></p>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                        <div id="emailValidation" class="validation-message"></div>
                     </div>
                 </div>
                 
-                <div class="label">
-                    <label for="CpasswordInput">Confirm Password:</label>
-                </div>
-                <div class="input">
-                    <input type="password" id="CpasswordInput" name="Cpassword" placeholder="Confirm Password" 
-                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br/>    
-                    <div id="CpasswordMessage" style="display: none;">
-                        <span class="CpasswordMessage"></span>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mobileNo">Mobile Number:</label>
+                        <input type="tel" id="mobileNo" name="mobileNo" pattern="01[0-9]-[0-9]{7,10}" placeholder="Mobile Number (01x-xxxxxxx)" required>
+                        <span class="red-text accent-4 validation-message" id="phoneValidation"></span>
                     </div>
-                    <br />
-                    <br />
+                
+                    <div class="form-group">
+                        <label for="passwordInput">Password:</label>
+                        <input type="password" id="passwordInput" name="password" placeholder="Password" 
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <div id="passwordMessage" style="display: none;" class="password-requirements">
+                            <h3>Password must contain the following:</h3>
+                            <p id="letter" class="invalid">&#10006; A <b>lowercase</b> letter</p>
+                            <p id="capital" class="invalid">&#10006; A <b>capital (uppercase)</b> letter</p>
+                            <p id="number" class="invalid">&#10006; A <b>number</b></p>
+                            <p id="length" class="invalid">&#10006; Minimum <b>8 characters</b></p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="login-home" style="text-align:center">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="CpasswordInput">Confirm Password:</label>
+                        <input type="password" id="CpasswordInput" name="Cpassword" placeholder="Confirm Password" 
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <div id="CpasswordMessage" style="display: none;" class="validation-message">
+                            <span class="CpasswordMessage"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <!-- Empty div to maintain layout -->
+                    </div>
+                </div>
+                
+                <div class="login-link">
                     <p>Already have an account? <a href="../JSP/Login.jsp">Login Now</a></p>
                 </div>
                 
-                <button type="reset" 
-                    style="border-radius:10px; background-color: rgb(253, 253, 214); color: black;
-                    font-size: 15px; padding: 12px 20px; border: none; float:left;"
-                    onmouseover="this.style.backgroundColor='black'; this.style.color='rgb(253, 253, 214)';"
-                    onmouseout="this.style.backgroundColor='rgb(253, 253, 214)'; this.style.color='black';">
-                    Reset
-                </button>
-                
-                <button type="submit" style="border-radius:10px;">Register</button>
-            </fieldset>
+                <div class="button-container">
+                    <button type="reset" class="reset-btn">Reset</button>
+                    <button type="submit" class="register-btn">Register</button>
+                </div>
         </form>
     </div>
     
     <!-- Double Confirm-->
-    <script>
+     <script>
         $(document).ready(function(){
             // Attach a click event to the Register button
             $('button[type="submit"]').on('click', function(event){
@@ -173,7 +157,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/ValidateName', // Calls the servlet
+                            url: '/ValidateName', // Calls the servlet
                             data: { name: fullName },
                             success: function (response) { // Renamed for clarity
                                 if (response.trim() === "Valid Name") {
@@ -207,7 +191,7 @@
                 if (username.length > 0) { // Only check if there's input
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckName',
+                        url: '/CheckName',
                         data: { username: username },
                         success: function(response){ // Renamed for clarity
                             if (response.trim() === "Already Exists") {
@@ -278,7 +262,7 @@
                     } else { // Valid email format, check if it already exists
                         $.ajax({
                             type: 'POST',
-                            url: '/GlowyDays/CheckEmail',
+                            url: '/CheckEmail',
                             data: { email: email },
                             success: function(response){
                                 if (response.trim() === "Already Exists") {
@@ -323,7 +307,7 @@
                     // Perform AJAX request
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckMobile',
+                        url: '/CheckMobile',
                         data: { mobileNo: mobileNo },
                         success: function(response){
                             if (response.trim() === "Already Exists") {
@@ -376,7 +360,7 @@
                 if (hasLowerCase && hasUpperCase && hasNumber && hasMinLength) {
                     $.ajax({
                         type: 'POST',
-                        url: '/GlowyDays/CheckPassword',
+                        url: '/CheckPassword',
                         data: { password: password },
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages
