@@ -19,12 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <!-- Back button added -->
-    <a href="AdminPanel.jsp" class="back-button">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
     
-    <div class="container">
+    <div class="wrap">
         <h1>Sign Up</h1>
         <p class="subtitle">Please fill in the fields below</p>
         

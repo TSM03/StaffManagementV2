@@ -1,59 +1,54 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
-    <link href="../CSS/register.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="../CSS/NewPassword.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-    
-    <div id="signup">
-        <br />
-        <h1>Reset Password</h1>
-        <p style="font-size:20px; text-align: center; margin-top: 5px; margin-bottom:5px;">Please fill in the fields below</p>
-        <hr>
-        
-        <form action="/NewPassword" method="post">
-            <fieldset>
-                <div class="label">
-                    <label for="passwordInput">Password:</label>
-                </div>
-                <div class="input">
-                    <input type="password" id="passwordInput" name="password" placeholder="Password" 
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br/>    
-                    <div id="passwordMessage" style="display: none;">
-                        <h3 style="font-size: 15px;">Password must contain the following:</h3>
-                        <p id="letter" class="invalid" style="font-size: 13px;">&#10006; A <b>lowercase</b> letter</p>
-                        <p id="capital" class="invalid" style="font-size: 13px;">&#10006; A <b>capital (uppercase)</b> letter</p>
-                        <p id="number" class="invalid" style="font-size: 13px;">&#10006; A <b>number</b></p>
-                        <p id="length" class="invalid" style="font-size: 13px;">&#10006; Minimum <b>8 characters</b></p>
+<body>
+    <div class="back-button">
+        <a href="Login.jsp"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+
+    <div class="password-container">
+        <div class="password-card">
+            <h1 class="password-title">Reset Password</h1>
+            <div class="underline"></div>
+            
+            <p class="password-subtitle">Please fill in the fields below</p>
+            
+            <form action="/NewPassword" method="post" class="password-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passwordInput">Password:</label>
+                        <input type="password" id="passwordInput" name="password" placeholder="Enter new password" 
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <div id="passwordMessage" style="display: none;" class="password-requirements">
+                            <h3>Password must contain the following:</h3>
+                            <p id="letter" class="invalid">&#10006; A <b>lowercase</b> letter</p>
+                            <p id="capital" class="invalid">&#10006; A <b>capital (uppercase)</b> letter</p>
+                            <p id="number" class="invalid">&#10006; A <b>number</b></p>
+                            <p id="length" class="invalid">&#10006; Minimum <b>8 characters</b></p>
+                        </div>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="CpasswordInput">Confirm Password:</label>
+                        <input type="password" id="CpasswordInput" name="Cpassword" placeholder="Confirm new password" 
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <div id="CpasswordMessage" style="display: none;" class="validation-message">
+                            <span class="CpasswordMessage"></span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="label">
-                    <label for="CpasswordInput">Confirm Password:</label>
-                </div>
-                <div class="input">
-                    <input type="password" id="CpasswordInput" name="Cpassword" placeholder="Confirm Password" 
-                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br/>    
-                    <div id="CpasswordMessage" style="display: none;">
-                        <span class="CpasswordMessage"></span>
-                    </div>
-                    <br />
-                    <br />
-                </div>
-                
-                <button type="reset" 
-                    style="border-radius:10px; background-color: rgb(253, 253, 214); color: black;
-                    font-size: 15px; padding: 12px 20px; border: none; float:left;"
-                    onmouseover="this.style.backgroundColor='black'; this.style.color='rgb(253, 253, 214)';"
-                    onmouseout="this.style.backgroundColor='rgb(253, 253, 214)'; this.style.color='black';">
-                    Reset
-                </button>
-                
-                <button type="submit" style="border-radius:10px;">Submit</button>
-            </fieldset>
-        </form>
+                <button type="submit" class="submit-btn">Update Password</button>
+            </form>
+        </div>
     </div>
     
     <!-- Password validation (Meet with requirement)-->
@@ -89,7 +84,7 @@
                         success: function(response){
                             $('#passwordMessage span').remove(); // Remove previous messages
                             if (response.trim() !== "Valid") {
-                                $('#passwordMessage').append('<span style="color:red;">? ' + response + '</span>');
+                                $('#passwordMessage').append('<span style="color:red;">✖ ' + response + '</span>');
                             }
                         },
                         error: function(){
@@ -122,26 +117,35 @@
                 var password = $('#passwordInput').val();
                 var confirmPassword = $('#CpasswordInput').val();
 
-                if (confirmPassword.length > 0) { 
-                    $('#CpasswordMessage').show(); // Ensure the message box is visible
+                // Password requirements check
+                var hasLowerCase = /[a-z]/.test(password);
+                var hasUpperCase = /[A-Z]/.test(password);
+                var hasNumber = /[0-9]/.test(password);
+                var hasMinLength = password.length >= 8;
 
-                    if (confirmPassword !== password) {
-                        $('#CpasswordMessage').html('<span style="color:red; font-size:13px;">Please reenter the same password to confirm password!</span>');
+                var isPasswordValid = hasLowerCase && hasUpperCase && hasNumber && hasMinLength;
+
+                if (confirmPassword.length > 0) { 
+                    $('#CpasswordMessage').show();
+
+                    if (!isPasswordValid) {
+                        $('#CpasswordMessage').html('<span style="color:red; font-size:13px;">Please enter a valid password that meets all requirements first!</span>');
+                        $('button[type="submit"]').prop('disabled', true);
+                    } else if (confirmPassword !== password) {
+                        $('#CpasswordMessage').html('<span style="color:red; font-size:13px;">Please reenter the same password to confirm!</span>');
                         $('button[type="submit"]').prop('disabled', true);
                     } else {
                         $('#CpasswordMessage').html('<span style="color:green; font-size:13px;">Passwords match.</span>');
                         $('button[type="submit"]').prop('disabled', false);
                     }
                 } else {
-                    $('#CpasswordMessage').hide(); // Hide message if field is empty
+                    $('#CpasswordMessage').hide();
                 }
             }
 
-            // Run validation when either field changes
             $('#passwordInput, #CpasswordInput').on('keyup', validatePassword);
         });
     </script>
     <!-- End of Confirm Password validation (Must same with Password text field)-->
-    
 </body>
 </html>

@@ -23,7 +23,7 @@
         <i class="fas fa-arrow-left"></i> Back
     </a>
     
-    <div class="container">
+    <div class="wrap">
         <h1>Sign Up</h1>
         <p class="subtitle">Please fill in the fields below</p>
         
