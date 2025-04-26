@@ -17,19 +17,7 @@
              <a href="GuestHome.jsp"><h2 style="font-weight: bolder; font-size: 3rem; color: black;">GLOWY DAYS</h2></a>
                <div class="navbar">
                     <a href="">Home</a>
-                    <div class="dropdown">
-                        <a href="#">Product</a>
-                        <div class="dropdown-content">
-                            <a href="#">Skincare</a>
-                            <a href="#">Makeup</a>
-                            <a href="#">Hair Care</a>
-                            <a href="#">Body Care</a>
-                            <a href="#">Fragrance</a>
-                            <a href="#">Tools</a>
-                            <a href="#">Men's Care</a>
-                            <a href="#">Sets & Gifts</a>
-                        </div>
-                    </div>
+                    <a href="#">Product</a>                       
                     <a href="">About Us</a>               
                     <a href="">Contact Us</a>                             
                </div>

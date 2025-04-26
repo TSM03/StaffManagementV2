@@ -1,9 +1,14 @@
 const searchIcon = document.getElementById('search-icon');
-        const searchBox = document.getElementById('search-box');
+const searchBox = document.getElementById('search-box');
 
-        searchIcon.addEventListener('click', () => {
-            searchBox.classList.toggle('show');
-        });
+searchIcon.addEventListener('click', () => {
+    searchBox.classList.toggle('show');
+    // Optional: Auto focus the input when it appears
+    if (searchBox.classList.contains('show')) {
+        searchBox.focus();
+    }
+});
+
 
 let slides = document.querySelectorAll('.home .slide');
 let index = 0;

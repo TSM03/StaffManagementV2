@@ -162,11 +162,11 @@
                 var password = $('#password').val().trim();
                 var isValid = true;
 
-                // Clear previous errors
+                // Clear previous validation messages
                 $('#emailValidation').html('');
                 $('#passwordValidation').html('');
 
-                // Simple frontend validation
+                // Validate password (check if it's empty)
                 if (password.length === 0) {
                     $('#passwordValidation').html('<span style="color:red; font-size:13px;">Password is required.</span>');
                     isValid = false;
@@ -174,7 +174,7 @@
 
                 if (!isValid) return;
 
-                // AJAX call to backend LoginPassword servlet for validation
+                // AJAX call to validate login credentials
                 $.ajax({
                     type: 'POST',
                     url: '/LoginPassword',
@@ -182,9 +182,9 @@
                     success: function (response) {
                         if (response.trim() === "Not login") {
                             $('#passwordValidation').html('<span style="color:red; font-size:13px;">Invalid password! Please try again!</span>');
-                            $('#password').val('');
+                            $('#password').val(''); // Clear password field after incorrect input
                         } else {
-                            true;
+                            window.location.href = '/JSP/UserHome.jsp'; // Redirect to home page if login is successful
                         }
                     },
                     error: function () {

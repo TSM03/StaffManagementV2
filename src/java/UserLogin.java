@@ -29,8 +29,10 @@ public class UserLogin extends HttpServlet {
 
             if (user != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                session.setAttribute("role", user.getRole());
+                session.setAttribute("user", user);           // stores the full user object
+                session.setAttribute("role", user.getRole());  // stores the role
+                session.setAttribute("userId", user.getId()); // <-- store user_id here!
+                
                 
                 String role = user.getRole().trim().toLowerCase();
 
