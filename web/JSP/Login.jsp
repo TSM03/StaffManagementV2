@@ -184,7 +184,7 @@
                             $('#passwordValidation').html('<span style="color:red; font-size:13px;">Invalid password! Please try again!</span>');
                             $('#password').val('');
                         } else {
-                            window.location.href = '/JSP/UserHome.jsp'; // Can be replaced with your homepage
+                            true;
                         }
                     },
                     error: function () {

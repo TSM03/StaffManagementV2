@@ -1,854 +1,217 @@
 <%-- 
-    Document   : StaffPanel
-    Created on : Apr 19, 2025, 6:59:00 PM
+    Document   : AdminPanel
+    Created on : Apr 16, 2025, 11:39:02 PM
     Author     : tsm11
 --%>
-
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+String id = request.getParameter("userId");
+String driverName = "org.apache.derby.jdbc.ClientDriver";
+String connectionUrl = "jdbc:derby://localhost:1527/";
+String dbName = "User";
+String userId = "nbuser";
+String password = "nbuser";
+
+try {
+Class.forName(driverName);
+} catch (ClassNotFoundException e) {
+e.printStackTrace();
+}
+
+Connection connection = null;
+Statement statement = null;
+ResultSet resultSet = null;
+%>
+
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Dashboard</title>
-        <link rel="stylesheet" href="../CSS/StaffPanel.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </head>
-    </head>
-    <body>
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <i class="fas fa-user-cog"></i>
-                <h2>Master Admin</h2>
-            </div>
-            <div class="menu-item active" data-section="dashboard">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/AdminPanel.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Staff Panel</h2>
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active">
+                <div class="menu-left">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
+                </div>
             </div>
-            <div class="menu-item" data-section="enquiries">
-                <i class="fas fa-question-circle"></i>
-                <span>Enquiry Management</span>
+            <div class="menu-item customer-toggle">
+                <div class="menu-left">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Customer Management</span>              
+                </div>             
+                <i class="fas fa-chevron-right menu-arrow"></i>
             </div>
-            <div class="menu-item" data-section="team">
-                <i class="fas fa-users"></i>
-                <span>Team Management</span>
+
+            <!-- Dropdown Submenu for Customer -->
+            <div class="submenu" style="display: none;">
+                <div class="submenu-item">
+                    <a href="AddNewUser.jsp">Create Customer</a>
+                </div>
+                <div class="submenu-item">
+                    <a href="#" onclick="loadCustomerList()">Customer Listing</a>
+                </div>
             </div>
-            <div class="menu-item" data-section="services">
-                <i class="fas fa-concierge-bell"></i>
-                <span>Services Management</span>
+
+            <div class="menu-item">
+                <div class="menu-left">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Product Management</span>
+                </div>
             </div>
-            <div class="menu-item" data-section="portfolio">
-                <i class="fas fa-briefcase"></i>
-                <span>Portfolio Management</span>
+            <div class="menu-item">
+                <div class="menu-left">
+                <i class="fa-solid fa-box"></i>
+                <span>Order Management</span>
+                </div>
             </div>
-            <div class="menu-item" data-section="slider">
-                <i class="fas fa-sliders-h"></i>
-                <span>Slider Management</span>
+            <div class="menu-item">
+                <div class="menu-left">
+                <i class="fas fa-file"></i>
+                <span>Report Generation</span>
+                </div>
             </div>
-            <div class="menu-item" data-section="metadata">
-                <i class="fas fa-database"></i>
-                <span>Metadata</span>
+            <div class="menu-item">
+                <div class="menu-left">
+                <i class="fa-regular fa-user"></i>
+                <span>Logout</span>
+                </div>
+            </div>            
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div id="dynamicContent">
+        <div class="top-bar">
+            <div class="breadcrumb">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <span>/</span>
+                <a href="#">Dashboard</a>
             </div>
-            <div class="menu-item" data-section="settings">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
+            <div class="user-dropdown">
+                <span>Layout Admin</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
-
-        <div class="main-content">
-            <!-- Dashboard Section -->
-            <div id="dashboard" class="content-section active">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Dashboard</h1>
-                        <p>Control Panel</p>
-                    </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Dashboard</a>
-                    </div>
-                </div>
-
-                <div class="stats-container">
-                    <div class="stat-card blue">
-                        <h2>4</h2>
-                        <p>Total Static Page</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card orange">
-                        <h2>15</h2>
-                        <p>Total School</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card red">
-                        <h2>70</h2>
-                        <p>Total Team</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card green">
-                        <h2>20</h2>
-                        <p>Total Services</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card dark-blue">
-                        <h2>30</h2>
-                        <p>Total Portfolio</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card pink">
-                        <h2>50</h2>
-                        <p>Total User</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-
-                    <div class="stat-card teal">
-                        <h2>65</h2>
-                        <p>Total Enquiries</p>
-                        <div class="more-info">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-                </div>
+        
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <p>Control panel</p>
             </div>
-
-            <!-- Enquiries Section -->
-            <div id="enquiries" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Enquiry Management</h1>
-                        <p>Manage all enquiries</p>
+            
+            <div class="stats-grid">
+                <!-- Stat Card 1 -->
+                <div class="stat-card">
+                    <div class="stat-card-header blue">
+                        <div class="number">4</div>
+                        <div class="label">Customer Management</div>
                     </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Enquiry Management</a>
+                    <div class="stat-card-footer blue">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                                <option>100</option>
-                            </select>
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>ID</option>
-                                <option>Name</option>
-                                <option>Date</option>
-                                <option>Amount</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add record
-                        </button>
+                
+                <!-- Stat Card 3 -->
+                <div class="stat-card">
+                    <div class="stat-card-header red">
+                        <div class="number">70</div>
+                        <div class="label">Product Management</div>
                     </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Status</option>
-                                <option>Paid</option>
-                                <option>Unpaid</option>
-                                <option>All</option>
-                            </select>
-                        </div>
+                    <div class="stat-card-footer red">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> CLIENT</th>
-                            <th><i class="fas fa-sort"></i> TOTAL</th>
-                            <th><i class="fas fa-sort"></i> ISSUED DATE</th>
-                            <th><i class="fas fa-sort"></i> BALANCE</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#5033</td>
-                            <td>
-                                <div class="client-info">
-                                    <div class="client-avatar">
-                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Andrew Bruno">
-                                    </div>
-                                    <div class="client-details">
-                                        <div class="client-name">Andrew Bruno</div>
-                                        <div class="client-email">bruno@crossover.org</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>$3171</td>
-                            <td>19 April, 2022</td>
-                            <td>-$205</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-paper-plane"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#5033</td>
-                            <td>
-                                <div class="client-info">
-                                    <div class="client-avatar">
-                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Exty Bruno">
-                                    </div>
-                                    <div class="client-details">
-                                        <div class="client-name">Exty Bruno</div>
-                                        <div class="client-email">exty@crossover.org</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>$3171</td>
-                            <td>19 April, 2022</td>
-                            <td>-$205</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-paper-plane"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#5033</td>
-                            <td>
-                                <div class="client-info">
-                                    <div class="client-avatar">
-                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Exty Bruno">
-                                    </div>
-                                    <div class="client-details">
-                                        <div class="client-name">Exty Bruno</div>
-                                        <div class="client-email">exty@crossover.org</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>$2171</td>
-                            <td>19 April, 2022</td>
-                            <td><span class="status-badge status-paid">Paid</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-paper-plane"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Team Management Section -->
-            <div id="team" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Team Management</h1>
-                        <p>Manage team members</p>
+                
+                <!-- Stat Card 4 -->
+                <div class="stat-card">
+                    <div class="stat-card-header green">
+                        <div class="number">20</div>
+                        <div class="label">Order Management</div>
                     </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Team Management</a>
+                    <div class="stat-card-footer green">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                                <option>100</option>
-                            </select>
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>ID</option>
-                                <option>Name</option>
-                                <option>Position</option>
-                                <option>Department</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add team member
-                        </button>
+                
+                <!-- Stat Card 5 -->
+                <div class="stat-card">
+                    <div class="stat-card-header dark-blue">
+                        <div class="number">30</div>
+                        <div class="label">Total Orders</div>
                     </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Status</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>All</option>
-                            </select>
-                        </div>
+                    <div class="stat-card-footer dark-blue">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> NAME</th>
-                            <th><i class="fas fa-sort"></i> POSITION</th>
-                            <th><i class="fas fa-sort"></i> DEPARTMENT</th>
-                            <th><i class="fas fa-sort"></i> STATUS</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#1001</td>
-                            <td>
-                                <div class="client-info">
-                                    <div class="client-avatar">
-                                        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="John Smith">
-                                    </div>
-                                    <div class="client-details">
-                                        <div class="client-name">John Smith</div>
-                                        <div class="client-email">john@example.com</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Senior Developer</td>
-                            <td>Engineering</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#1002</td>
-                            <td>
-                                <div class="client-info">
-                                    <div class="client-avatar">
-                                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Sarah Johnson">
-                                    </div>
-                                    <div class="client-details">
-                                        <div class="client-name">Sarah Johnson</div>
-                                        <div class="client-email">sarah@example.com</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>UX Designer</td>
-                            <td>Design</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Services Section -->
-            <div id="services" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Services Management</h1>
-                        <p>Manage services</p>
+                
+                <!-- Stat Card 6 -->
+                <div class="stat-card">
+                    <div class="stat-card-header pink">
+                        <div class="number">50</div>
+                        <div class="label">Total Users</div>
                     </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Services Management</a>
+                    <div class="stat-card-footer pink">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add service
-                        </button>
+                
+                <!-- Stat Card 7 -->
+                <div class="stat-card">
+                    <div class="stat-card-header gray">
+                        <div class="number">65</div>
+                        <div class="label">Report Generation</div>
                     </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Category</option>
-                                <option>Web Development</option>
-                                <option>Design</option>
-                                <option>Marketing</option>
-                            </select>
-                        </div>
+                    <div class="stat-card-footer gray">
+                        <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> SERVICE NAME</th>
-                            <th><i class="fas fa-sort"></i> CATEGORY</th>
-                            <th><i class="fas fa-sort"></i> PRICE</th>
-                            <th><i class="fas fa-sort"></i> STATUS</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#2001</td>
-                            <td>Website Development</td>
-                            <td>Web Development</td>
-                            <td>$1,500</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#2002</td>
-                            <td>Logo Design</td>
-                            <td>Design</td>
-                            <td>$500</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Portfolio Section -->
-            <div id="portfolio" class="content-section">
-                <!-- Similar structure as other sections -->
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Portfolio Management</h1>
-                        <p>Manage portfolio items</p>
-                    </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Portfolio Management</a>
-                    </div>
-                </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add portfolio
-                        </button>
-                    </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Category</option>
-                                <option>Web</option>
-                                <option>Mobile</option>
-                                <option>Design</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> PROJECT NAME</th>
-                            <th><i class="fas fa-sort"></i> CATEGORY</th>
-                            <th><i class="fas fa-sort"></i> CLIENT</th>
-                            <th><i class="fas fa-sort"></i> STATUS</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#3001</td>
-                            <td>E-commerce Website</td>
-                            <td>Web</td>
-                            <td>Fashion Store Inc.</td>
-                            <td><span class="status-badge status-paid">Completed</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#3002</td>
-                            <td>Mobile App</td>
-                            <td>Mobile</td>
-                            <td>Health Tech Ltd.</td>
-                            <td><span class="status-badge status-paid">Completed</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Slider Section -->
-            <div id="slider" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Slider Management</h1>
-                        <p>Manage slider content</p>
-                    </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Slider Management</a>
-                    </div>
-                </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add slider
-                        </button>
-                    </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Status</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> TITLE</th>
-                            <th><i class="fas fa-sort"></i> PAGE</th>
-                            <th><i class="fas fa-sort"></i> ORDER</th>
-                            <th><i class="fas fa-sort"></i> STATUS</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#4001</td>
-                            <td>Welcome Slide</td>
-                            <td>Home</td>
-                            <td>1</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#4002</td>
-                            <td>Services Slide</td>
-                            <td>Services</td>
-                            <td>1</td>
-                            <td><span class="status-badge status-paid">Active</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Metadata Section -->
-            <div id="metadata" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Metadata</h1>
-                        <p>Manage site metadata</p>
-                    </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Metadata</a>
-                    </div>
-                </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Entries</option>
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-plus"></i> Add metadata
-                        </button>
-                    </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search">
-                        </div>
-                        <div class="select-container">
-                            <select>
-                                <option>Type</option>
-                                <option>SEO</option>
-                                <option>Social</option>
-                                <option>Schema</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> #</th>
-                            <th><i class="fas fa-sort"></i> PAGE</th>
-                            <th><i class="fas fa-sort"></i> META TITLE</th>
-                            <th><i class="fas fa-sort"></i> TYPE</th>
-                            <th><i class="fas fa-sort"></i> LAST UPDATED</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="id-column">#5001</td>
-                            <td>Home</td>
-                            <td>Welcome to Our Website</td>
-                            <td>SEO</td>
-                            <td>15 April, 2022</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="id-column">#5002</td>
-                            <td>About</td>
-                            <td>About Our Company</td>
-                            <td>SEO</td>
-                            <td>16 April, 2022</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Settings Section -->
-            <div id="settings" class="content-section">
-                <div class="header">
-                    <div class="header-title">
-                        <h1>Settings</h1>
-                        <p>Manage system settings</p>
-                    </div>
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Settings</a>
-                    </div>
-                </div>
-
-                <div class="table-controls">
-                    <div class="table-controls-left">
-                        <div class="select-container">
-                            <select>
-                                <option>Category</option>
-                                <option>General</option>
-                                <option>Email</option>
-                                <option>Security</option>
-                            </select>
-                        </div>
-                        <button class="btn">
-                            <i class="fas fa-save"></i> Save Changes
-                        </button>
-                    </div>
-                    <div class="table-controls-right">
-                        <div class="search-container">
-                            <input type="text" placeholder="Search settings">
-                        </div>
-                    </div>
-                </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-sort"></i> SETTING NAME</th>
-                            <th><i class="fas fa-sort"></i> CATEGORY</th>
-                            <th><i class="fas fa-sort"></i> VALUE</th>
-                            <th><i class="fas fa-sort"></i> LAST UPDATED</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Site Title</td>
-                            <td>General</td>
-                            <td>Master Admin</td>
-                            <td>10 April, 2022</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Admin Email</td>
-                            <td>Email</td>
-                            <td>admin@example.com</td>
-                            <td>12 April, 2022</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                
+                
+                
             </div>
         </div>
-        <script>
-            // JavaScript to handle sidebar menu clicks and show/hide content sections
-            document.addEventListener('DOMContentLoaded', function() {
-                const menuItems = document.querySelectorAll('.menu-item');
-                const contentSections = document.querySelectorAll('.content-section');
+    </div>
+</div>
+    <script>
 
-                menuItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        // Remove active class from all menu items
-                        menuItems.forEach(i => i.classList.remove('active'));
+        const customerToggle = document.querySelector(".customer-toggle");
+        const customerSubmenu = customerToggle.nextElementSibling; // the next .submenu after customer-toggle
+        const customerArrow = customerToggle.querySelector(".menu-arrow");
 
-                        // Add active class to clicked menu item
-                        this.classList.add('active');
+        customerToggle.addEventListener("click", function () {
+            customerSubmenu.style.display = customerSubmenu.style.display === "none" ? "block" : "none";
+            customerArrow.classList.toggle("rotate");
+        });
+    });
 
-                        // Hide all content sections
-                        contentSections.forEach(section => {
-                            section.classList.remove('active');
-                        });
-
-                        // Show the corresponding content section
-                        const sectionId = this.getAttribute('data-section');
-                        document.getElementById(sectionId).classList.add('active');
-                    });
-                });
-
-                // Handle "More info" clicks on dashboard cards
-                const moreInfoLinks = document.querySelectorAll('.more-info');
-                moreInfoLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        const cardType = this.parentElement.querySelector('p').textContent.trim();
-                        let sectionToShow = 'dashboard';
-
-                        // Map card types to sections
-                        if (cardType === 'Total Enquiries') sectionToShow = 'enquiries';
-                        if (cardType === 'Total Team') sectionToShow = 'team';
-                        if (cardType === 'Total Services') sectionToShow = 'services';
-                        if (cardType === 'Total Portfolio') sectionToShow = 'portfolio';
-                        if (cardType === 'Total School') sectionToShow = 'slider';
-
-                        // Trigger click on the corresponding menu item
-                        document.querySelector(`.menu-item[data-section="${sectionToShow}"]`).click();
-                    });
-                });
+    function loadCustomerList() {
+        fetch('CustomerManagement.jsp')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.dashboard-content').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading customer list:', error);
             });
-        </script>
-    </body>
-    </html>
+    }
+</script>
+</body>
+</html>
+
